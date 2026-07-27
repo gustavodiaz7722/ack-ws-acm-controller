@@ -58,6 +58,7 @@ type CertificateSpec struct {
 	// names up to 253 octets in length.
 	//
 	// Regex Pattern: `^(\*\.)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])\.)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$`
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="Value is immutable once set"
 	DomainName *string `json:"domainName,omitempty"`
 	// The domain name that you want ACM to use to send you emails so that you can
 	// validate domain ownership.

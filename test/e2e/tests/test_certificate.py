@@ -221,6 +221,16 @@ class TestCertificate:
             actual=observed_tags,
         )
 
+        # Test domainName field is immutable and is rejected by API server
+        updates = {
+            "spec": {
+                "domainName": "new.domain.example.com"
+            }
+        }
+        with pytest.raises(k8s.ApiException) as e:
+            k8s.patch_custom_resource(ref, updates)
+        assert "Value is immutable once set" in str(e.value.body)
+
         k8s.delete_custom_resource(ref)
         time.sleep(DELETE_WAIT_AFTER_SECONDS)
         certificate.wait_until_deleted(certificate_arn)

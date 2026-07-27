@@ -73,6 +73,7 @@ resources:
       DomainName:
         is_primary_key: false
         is_required: false
+        is_immutable: true
       Certificate:
         type: "bytes"
         is_secret: true
